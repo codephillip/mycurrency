@@ -41,7 +41,7 @@ class CurrencyRatePerCurrencyTests(TestCase):
         )
         self.client = APIClient()
 
-    def test_get_currency_rate_per_currency(self):
+    def test_get_currency_rate_per_currency_success(self):
         source_currency = 'USD'
 
         url = reverse('currency-rate-per-currency')
