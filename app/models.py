@@ -13,11 +13,15 @@ CURRENCY_CHOICES = [
     (GBP, 'British Pound Sterling'),
 ]
 
+
 class Currency(models.Model):
     code = models.CharField(max_length=3, choices=CURRENCY_CHOICES, unique=True)
     name = models.CharField(max_length=20, db_index=True)
     symbol = models.CharField(max_length=10)
     is_protected = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.code
 
     def delete(self, *args, **kwargs):
         if self.is_protected:
