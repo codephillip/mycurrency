@@ -17,6 +17,12 @@ class Currency(models.Model):
     code = models.CharField(max_length=3, choices=CURRENCY_CHOICES, unique=True)
     name = models.CharField(max_length=20, db_index=True)
     symbol = models.CharField(max_length=10)
+    is_protected = models.BooleanField(default=True)
+
+    def delete(self, *args, **kwargs):
+        if self.is_protected:
+            raise ValidationError('This currency_exchange_rate is protected and cannot be deleted.')
+        super().delete(*args, **kwargs)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
