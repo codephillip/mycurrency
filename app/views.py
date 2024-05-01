@@ -14,7 +14,7 @@ class CurrencyRatePerCurrencyView(APIView):
             validated_data = serializer.validated_data
             date_from = validated_data['date_from']
             date_to = validated_data['date_to']
-            source_currency = validated_data['source_currency']
+            source_currency = validated_data['source_currency'].upper()
 
             currency_exchanges = CurrencyExchangeRate.objects.filter(
                 valuation_date__range=(date_from, date_to),
