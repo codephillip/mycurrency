@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 from app.models import CurrencyExchangeRate
+from datetime import datetime
 
 
 def convert_currency(source_currency: str, amount: float, exchanged_currency: str):
@@ -15,7 +16,7 @@ def convert_currency(source_currency: str, amount: float, exchanged_currency: st
     exchanged_amount = amount * exchange_rate.rate_value
     return exchanged_amount, exchange_rate.rate_value
 
-def currency_converter_response(source_currency, amount, exchanged_currency):
+def format_currency_converter_response(source_currency: str, amount: float, exchanged_currency: str):
     result = convert_currency(source_currency, amount, exchanged_currency)
     if result:
         exchanged_amount, exchange_rate = result
@@ -29,7 +30,7 @@ def currency_converter_response(source_currency, amount, exchanged_currency):
     return None
 
 
-def get_currency_exchanges(date_from, date_to, source_currency):
+def get_currency_exchanges(date_from: datetime, date_to: datetime, source_currency: str):
     currency_exchanges = CurrencyExchangeRate.objects.filter(
         valuation_date__range=(date_from, date_to),
         source_currency__code=source_currency
