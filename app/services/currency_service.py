@@ -44,3 +44,8 @@ def get_currency_exchanges(date_from: datetime, date_to: datetime, source_curren
             'value': float(currency_exchange.rate_value)
         })
     return response_data
+
+
+def calculate_twrr(source_currency, amount, exchanged_currency, start_date):
+    return []
+

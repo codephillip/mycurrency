@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import CurrencyRatePerCurrencyView, CurrencyConverterView
+from .views import CurrencyRatePerCurrencyView, CurrencyConverterView, TWRRView
 
 urlpatterns = [
     path('currencyRatesPerCurrency', CurrencyRatePerCurrencyView.as_view(), name='currency-rate-per-currency'),
     path('currencyConverter', CurrencyConverterView.as_view(), name='currency-converter'),
+    path('calculateTWRR', TWRRView.as_view(), name='calculate-twrr'),
 ]

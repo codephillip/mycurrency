@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-class CurrencyRateQueryParamsSerializer(serializers.Serializer):
+class CurrencyRateParamsSerializer(serializers.Serializer):
     date_from = serializers.DateField(input_formats=['%Y-%m-%d'])
     date_to = serializers.DateField(input_formats=['%Y-%m-%d'])
     source_currency = serializers.CharField(max_length=3)
@@ -12,7 +12,7 @@ class CurrencyRateQueryParamsSerializer(serializers.Serializer):
         return data
 
 
-class CurrencyConverterSerializer(serializers.Serializer):
+class CurrencyConverterParamsSerializer(serializers.Serializer):
     source_currency = serializers.CharField(max_length=3)
     amount = serializers.DecimalField(max_digits=10, decimal_places=2)
     exchanged_currency = serializers.CharField(max_length=3)
@@ -21,3 +21,10 @@ class CurrencyConverterSerializer(serializers.Serializer):
         if data.get('source_currency') == data.get('exchanged_currency'):
             raise serializers.ValidationError("Source and exchanged currency must be different")
         return data
+
+
+class TWRRParamsSerializer(serializers.Serializer):
+    source_currency = serializers.CharField(max_length=3)
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+    exchanged_currency = serializers.CharField(max_length=3)
+    start_date = serializers.DateField()
