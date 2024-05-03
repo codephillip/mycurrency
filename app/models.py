@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils import timezone
 
 USD = 'USD'
 EUR = 'EUR'
@@ -25,7 +26,7 @@ class Currency(models.Model):
 
     def delete(self, *args, **kwargs):
         if self.is_protected:
-            raise ValidationError('This currency_exchange_rate is protected and cannot be deleted.')
+            raise ValidationError('This currency is protected and cannot be deleted.')
         super().delete(*args, **kwargs)
 
     def save(self, force_insert=False, force_update=False, using=None,
@@ -53,3 +54,11 @@ class CurrencyExchangeRate(models.Model):
             raise ValidationError('Source and exchanged currency must be different')
         super().save(force_insert=force_insert, force_update=force_update, using=using,
                      update_fields=update_fields)
+
+
+class ProviderModel(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    priority = models.IntegerField(blank=False, null=False, default=100)
+    module_dir = models.CharField(max_length=300, unique=True)
+    module_name = models.CharField(max_length=300, unique=True)
+    created_at = models.DateTimeField(default=timezone.now)
