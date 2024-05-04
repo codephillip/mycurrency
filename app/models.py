@@ -59,7 +59,7 @@ class CurrencyExchangeRate(models.Model):
 class ProviderModel(models.Model):
     name = models.CharField(max_length=20, unique=True)
     priority = models.IntegerField(blank=False, null=False, default=100)
-    module_dir = models.CharField(max_length=300, unique=True)
+    module_dir = models.CharField(max_length=300)
     module_name = models.CharField(max_length=300, unique=True)
     created_at = models.DateTimeField(default=timezone.now)
 

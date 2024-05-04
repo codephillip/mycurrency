@@ -6,13 +6,15 @@ from app.models import ProviderModel
 
 
 class Command(BaseCommand):
+    help = 'Imports new provider directly without reloading the app'
+
     def add_arguments(self, parser):
-        parser.add_argument('code', type=str, help='Provider code to import')
-        parser.add_argument('provider_name', type=str, help='Provider code to import')
+        parser.add_argument('--code', type=str, help='Provider code to import')
+        parser.add_argument('--provider_name', type=str, help='Provider name')
 
     def handle(self, *args, **options):
-        code = options['code']
-        provider_name = options['provider_name']
+        code = options.get('code')
+        provider_name = options.get('provider_name')
         filename = f'provider_gen_{abs(hash(code))}.py'
         services_dir = os.path.join(os.getcwd(), 'app', 'services')
         file_path = os.path.join(services_dir, filename)
@@ -22,7 +24,7 @@ class Command(BaseCommand):
                 f.write(code)
         except OSError as e:
             print(e)
-            self.stdout.write(self.style.ERROR('Provider import failed'))
+            self.stdout.write(self.style.WARNING('Provider import failed'))
             return
 
         module_name = os.path.splitext(os.path.basename(file_path))[0]

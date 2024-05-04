@@ -6,6 +6,7 @@ from django.shortcuts import render
 from app.forms import CurrencyExchangeForm
 from django.http import HttpRequest
 from app.views import CurrencyConverterView
+from mycurrency.constants import DATE_FORMAT
 
 
 class CurrencyExchangeAdmin(admin.ModelAdmin):
@@ -53,7 +54,7 @@ class CurrencyExchangeAdmin(admin.ModelAdmin):
             exchange_data[key].append(float(currency_rate.rate_value))
 
         distinct_dates = CurrencyExchangeRate.objects.values('valuation_date').distinct().order_by('valuation_date')
-        exchange_data['dates'] = [date['valuation_date'].strftime('%Y-%m-%d') for date in distinct_dates]
+        exchange_data['dates'] = [date['valuation_date'].strftime(DATE_FORMAT) for date in distinct_dates]
         return render(request, 'exchange_rate_graph.html', {'data': exchange_data})
 
 

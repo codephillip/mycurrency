@@ -1,3 +1,4 @@
+import random
 import sys
 from importlib import import_module
 from typing import List
@@ -19,6 +20,15 @@ class Provider(ABC):
     @abstractmethod
     def get_exchange_rate_data(self, source_currency: str, exchanged_currencies: List[str], valuation_date: datetime):
         pass
+
+
+class MockProvider(Provider):
+    def execute_api(self, source_currency, exchanged_currencies, valuation_date):
+        pass
+
+    def get_exchange_rate_data(self, source_currency: str, exchanged_currencies: List[str], valuation_date: datetime):
+        return round(random.uniform(0.5, 1.1), 6)
+
 
 
 def transform_to_executable(provider_model: ProviderModel):

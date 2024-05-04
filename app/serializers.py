@@ -1,9 +1,11 @@
 from rest_framework import serializers
 
+from mycurrency.constants import DATE_FORMAT
+
 
 class CurrencyRateParamsSerializer(serializers.Serializer):
-    date_from = serializers.DateField(input_formats=['%Y-%m-%d'])
-    date_to = serializers.DateField(input_formats=['%Y-%m-%d'])
+    date_from = serializers.DateField(input_formats=[DATE_FORMAT])
+    date_to = serializers.DateField(input_formats=[DATE_FORMAT])
     source_currency = serializers.CharField(max_length=3)
 
     def validate(self, data):
