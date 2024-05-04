@@ -1,20 +1,41 @@
 from collections import defaultdict
+from decimal import Decimal
 
-from app.models import CurrencyExchangeRate
+from app.models import CurrencyExchangeRate, ProviderModel
 from datetime import datetime
+
+from app.services.provider_service import get_exchange_rate_data, transform_to_executable
+
+
+def get_exchange_from_server(source_currency: str, exchanged_currency: str):
+    try:
+        provider = transform_to_executable(ProviderModel.objects.first())
+        rates = get_exchange_rate_data(source_currency, exchanged_currency, datetime.now(), provider)
+        rate_value = rates[exchanged_currency]
+        return rate_value
+    except Exception as e:
+        print(e)
+    return None
 
 
 def convert_currency(source_currency: str, amount: float, exchanged_currency: str):
+    rate_value = 0
     try:
         exchange_rate = CurrencyExchangeRate.objects.filter(
             source_currency__code=source_currency.upper(),
             exchanged_currency__code=exchanged_currency.upper()
         ).latest('valuation_date')
-    except CurrencyExchangeRate.DoesNotExist:
-        return None
+        rate_value = exchange_rate.rate_value
+    except Exception as e:
+        print(e)
 
-    exchanged_amount = amount * exchange_rate.rate_value
-    return exchanged_amount, exchange_rate.rate_value
+    if not rate_value:
+        rate_value = get_exchange_from_server(source_currency, exchanged_currency)
+    if not rate_value:
+        return None
+    exchanged_amount = Decimal(amount) * Decimal(rate_value)
+    return exchanged_amount, rate_value
+
 
 def format_currency_converter_response(source_currency: str, amount: float, exchanged_currency: str):
     result = convert_currency(source_currency, amount, exchanged_currency)
@@ -48,4 +69,3 @@ def get_currency_exchanges(date_from: datetime, date_to: datetime, source_curren
 
 def calculate_twrr(source_currency, amount, exchanged_currency, start_date):
     return []
-
