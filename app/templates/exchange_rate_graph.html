@@ -1,0 +1,51 @@
+{% extends 'admin/base_site.html' %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <style>
+        #exchangeGraphContainer {
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="exchangeGraphContainer">
+        <div id="exchangeGraph"></div>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script>
+        const data = {{ data|safe }};
+
+        const layout = {
+            title: 'Exchange Rate Comparisons',
+            xaxis: {
+                title: 'Date'
+            },
+            yaxis: {
+                title: 'Exchange Rate'
+            }
+        };
+
+        function createChart(data) {
+            const dates = data.dates;
+
+            const traces = Object.keys(data).filter(key => key !== 'dates').map(currencyPair => ({
+                x: dates,
+                y: data[currencyPair],
+                mode: 'lines+markers',
+                name: currencyPair
+            }));
+
+            Plotly.newPlot('exchangeGraph', traces, layout);
+        }
+
+        createChart(data);
+        function reloadPage() {
+            location.reload();
+        }
+        setInterval(reloadPage, 60000);
+    </script>
+{% endblock %}
