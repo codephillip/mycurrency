@@ -4,6 +4,7 @@ from typing import List
 from abc import ABC, abstractmethod
 
 from app.models import ProviderModel
+from datetime import datetime
 
 
 class Provider(ABC):
@@ -16,17 +17,25 @@ class Provider(ABC):
         pass
 
     @abstractmethod
-    def get_exchange_rate_data(self, source_currency: str, exchanged_currencies: List[str], valuation_date: str):
+    def get_exchange_rate_data(self, source_currency: str, exchanged_currencies: List[str], valuation_date: datetime):
         pass
 
 
-def get_exchange_rate_data(source_currency: str, exchanged_currencies: List[str], valuation_date: str):
-    providers = ProviderModel.objects.order_by('priority')
+def transform_to_executable(provider_model: ProviderModel):
+    sys.path.append(provider_model.module_dir)
+    return import_module(provider_model.module_name).provider
 
+
+def get_exchange_rate_data(source_currency: str, exchanged_currency: str, valuation_date: datetime,
+                           provider: Provider):
+    rates = provider.get_exchange_rate_data(source_currency, [exchanged_currency], valuation_date)
+    if rates:
+        return rates
+
+    providers = ProviderModel.objects.all()
     for model in providers:
-        sys.path.append(model.module_dir)
-        converter_module = import_module(model.module_name)
-        result = converter_module.provider.get_exchange_rate_data(source_currency, exchanged_currencies, valuation_date)
-        if result:
-            return result
+        provider = transform_to_executable(model)
+        rates = provider.get_exchange_rate_data(source_currency, [exchanged_currency], valuation_date)
+        if rates:
+            return rates
     return None

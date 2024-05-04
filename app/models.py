@@ -62,3 +62,6 @@ class ProviderModel(models.Model):
     module_dir = models.CharField(max_length=300, unique=True)
     module_name = models.CharField(max_length=300, unique=True)
     created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['priority', 'created_at']
