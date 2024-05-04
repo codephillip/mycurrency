@@ -44,16 +44,13 @@ class CurrencyExchangeAdmin(admin.ModelAdmin):
         return render(request, 'currency_exchange_form.html', {'form': form})
 
     def exchange_rate_graph_view(self, request):
-        currencies = [choice[0] for choice in CURRENCY_CHOICES]
         exchange_data = {}
-        for currency in currencies:
-            currency_rates = CurrencyExchangeRate.objects.filter(source_currency__code=currency).order_by(
-                'valuation_date')
-            for currency_rate in currency_rates:
-                key = f'{currency}/{currency_rate.exchanged_currency}'
-                if key not in exchange_data:
-                    exchange_data[key] = []
-                exchange_data[key].append(float(currency_rate.rate_value))
+        currency_rates = CurrencyExchangeRate.objects.all().order_by('valuation_date')
+        for currency_rate in currency_rates:
+            key = f'{currency_rate.source_currency}/{currency_rate.exchanged_currency}'
+            if key not in exchange_data:
+                exchange_data[key] = []
+            exchange_data[key].append(float(currency_rate.rate_value))
 
         distinct_dates = CurrencyExchangeRate.objects.values('valuation_date').distinct().order_by('valuation_date')
         exchange_data['dates'] = [date['valuation_date'].strftime('%Y-%m-%d') for date in distinct_dates]
