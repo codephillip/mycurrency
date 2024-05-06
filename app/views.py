@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import CurrencyRateParamsSerializer, CurrencyConverterParamsSerializer, TWRRParamsSerializer
 from .services.currency_service import get_currency_exchanges, format_currency_converter_response, calculate_twrr
+from datetime import datetime
 
 
 class CurrencyRatePerCurrencyView(APIView):
@@ -38,6 +39,7 @@ class TWRRView(APIView):
             twrr_series = calculate_twrr(data['source_currency'],
                                          data['amount'],
                                          data['exchanged_currency'],
-                                         data['start_date'])
+                                         data['start_date'],
+                                         data.get('end_data', datetime.now().strftime('%Y-%m-%d')))
             return Response({'data': twrr_series})
         return Response(serializer.errors, status=400)

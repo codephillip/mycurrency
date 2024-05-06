@@ -30,3 +30,9 @@ class TWRRParamsSerializer(serializers.Serializer):
     amount = serializers.DecimalField(max_digits=10, decimal_places=2)
     exchanged_currency = serializers.CharField(max_length=3)
     start_date = serializers.DateField()
+    end_date = serializers.DateField(required=False)
+
+    def validate(self, data):
+        if data.get('end_date') and data.get('end_date') <= data.get('start_date'):
+            raise serializers.ValidationError({'end_date': 'End date must be greater than start date'})
+        return data
