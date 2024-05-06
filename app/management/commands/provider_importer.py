@@ -15,6 +15,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         code = options.get('code')
         provider_name = options.get('provider_name')
+        if not code or not provider_name:
+            self.stdout.write(self.style.ERROR('Arguments not provided'))
+            return
         filename = f'provider_gen_{abs(hash(code))}.py'
         services_dir = os.path.join(os.getcwd(), 'app', 'services')
         file_path = os.path.join(services_dir, filename)
@@ -24,7 +27,7 @@ class Command(BaseCommand):
                 f.write(code)
         except OSError as e:
             print(e)
-            self.stdout.write(self.style.WARNING('Provider import failed'))
+            self.stdout.write(self.style.ERROR('Provider import failed'))
             return
 
         module_name = os.path.splitext(os.path.basename(file_path))[0]

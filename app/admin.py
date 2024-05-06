@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app.models import Currency, CurrencyExchangeRate, ProviderModel, CURRENCY_CHOICES
+from app.models import Currency, CurrencyExchangeRate, ProviderModel
 from django.urls import path
 from django.shortcuts import render
 from app.forms import CurrencyExchangeForm

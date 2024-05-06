@@ -39,5 +39,4 @@ class Command(BaseCommand):
                             rate_value=rates
                         )
                         exchange_rate.save()
-                        print(exchange_rate)
         self.stdout.write(self.style.SUCCESS('Exchange rates fetched and saved successfully'))

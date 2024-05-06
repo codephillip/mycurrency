@@ -30,7 +30,6 @@ class MockProvider(Provider):
         return round(random.uniform(0.5, 1.1), 6)
 
 
-
 def transform_to_executable(provider_model: ProviderModel):
     sys.path.append(provider_model.module_dir)
     return import_module(provider_model.module_name).provider

@@ -2,6 +2,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
+from mycurrency.constants import DATE_FORMAT
+
 USD = 'USD'
 EUR = 'EUR'
 CHF = 'CHF'
@@ -47,6 +49,9 @@ class CurrencyExchangeRate(models.Model):
                                            on_delete=models.CASCADE)
     valuation_date = models.DateField(db_index=True)
     rate_value = models.DecimalField(db_index=True, decimal_places=6, max_digits=18)
+
+    def __str__(self):
+        return self.valuation_date.strftime(DATE_FORMAT)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
