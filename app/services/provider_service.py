@@ -18,7 +18,8 @@ class Provider(ABC):
         pass
 
     @abstractmethod
-    def get_exchange_rate_data(self, source_currency: str, exchanged_currencies: List[str], valuation_date: datetime):
+    def get_exchange_rate_data(self, source_currency: str, exchanged_currencies: List[str],
+                               valuation_date: datetime) -> dict:
         pass
 
 
@@ -27,7 +28,7 @@ class MockProvider(Provider):
         pass
 
     def get_exchange_rate_data(self, source_currency: str, exchanged_currencies: List[str], valuation_date: datetime):
-        return round(random.uniform(0.5, 1.1), 6)
+        return {currency: round(random.uniform(0.5, 1.1), 6) for currency in exchanged_currencies}
 
 
 def transform_to_executable(provider_model: ProviderModel):

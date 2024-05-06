@@ -36,7 +36,7 @@ class Command(BaseCommand):
                             source_currency=source_currency,
                             exchanged_currency=exchanged_currency,
                             valuation_date=valuation_date,
-                            rate_value=rates
+                            rate_value=rates[exchanged_currency.code]
                         )
                         exchange_rate.save()
         self.stdout.write(self.style.SUCCESS('Exchange rates fetched and saved successfully'))
