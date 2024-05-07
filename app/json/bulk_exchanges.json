@@ -1,0 +1,332 @@
+[
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-07",
+    "rates": {
+      "USD": 1.107163,
+      "CHF": 0.816088,
+      "GBP": 0.797996
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-08",
+    "rates": {
+      "USD": 1.025576,
+      "CHF": 0.91536,
+      "GBP": 0.713268
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-09",
+    "rates": {
+      "USD": 1.17622,
+      "CHF": 0.87793,
+      "GBP": 0.845615
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-10",
+    "rates": {
+      "USD": 1.01462,
+      "CHF": 0.880714,
+      "GBP": 0.845235
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-11",
+    "rates": {
+      "USD": 1.186892,
+      "CHF": 0.894933,
+      "GBP": 0.833736
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-12",
+    "rates": {
+      "USD": 1.040457,
+      "CHF": 0.94989,
+      "GBP": 0.854374
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-13",
+    "rates": {
+      "USD": 1.093589,
+      "CHF": 0.855887,
+      "GBP": 0.719156
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-14",
+    "rates": {
+      "USD": 1.135077,
+      "CHF": 0.801255,
+      "GBP": 0.735622
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-15",
+    "rates": {
+      "USD": 1.129728,
+      "CHF": 0.926578,
+      "GBP": 0.759903
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-16",
+    "rates": {
+      "USD": 1.078284,
+      "CHF": 0.808082,
+      "GBP": 0.775666
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-17",
+    "rates": {
+      "USD": 1.166444,
+      "CHF": 0.8794,
+      "GBP": 0.872581
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-18",
+    "rates": {
+      "USD": 1.013327,
+      "CHF": 0.85847,
+      "GBP": 0.743943
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-19",
+    "rates": {
+      "USD": 1.035225,
+      "CHF": 0.881319,
+      "GBP": 0.723794
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-20",
+    "rates": {
+      "USD": 1.194255,
+      "CHF": 0.890933,
+      "GBP": 0.706427
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-21",
+    "rates": {
+      "USD": 1.005959,
+      "CHF": 0.973435,
+      "GBP": 0.762687
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-22",
+    "rates": {
+      "USD": 1.102471,
+      "CHF": 0.811691,
+      "GBP": 0.858294
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-23",
+    "rates": {
+      "USD": 1.005132,
+      "CHF": 0.91735,
+      "GBP": 0.791624
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-24",
+    "rates": {
+      "USD": 1.151812,
+      "CHF": 0.903967,
+      "GBP": 0.742678
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-25",
+    "rates": {
+      "USD": 1.132118,
+      "CHF": 0.860575,
+      "GBP": 0.794211
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-26",
+    "rates": {
+      "USD": 1.158725,
+      "CHF": 0.836734,
+      "GBP": 0.880492
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-27",
+    "rates": {
+      "USD": 1.087925,
+      "CHF": 0.996228,
+      "GBP": 0.855252
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-28",
+    "rates": {
+      "USD": 1.115859,
+      "CHF": 0.867757,
+      "GBP": 0.83122
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-29",
+    "rates": {
+      "USD": 1.06904,
+      "CHF": 0.843014,
+      "GBP": 0.81928
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-30",
+    "rates": {
+      "USD": 1.163397,
+      "CHF": 0.935853,
+      "GBP": 0.883926
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-05-31",
+    "rates": {
+      "USD": 1.105119,
+      "CHF": 0.902301,
+      "GBP": 0.718606
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-06-01",
+    "rates": {
+      "USD": 1.123178,
+      "CHF": 0.868174,
+      "GBP": 0.770007
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-06-02",
+    "rates": {
+      "USD": 1.103205,
+      "CHF": 0.854068,
+      "GBP": 0.770595
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-06-03",
+    "rates": {
+      "USD": 1.018026,
+      "CHF": 0.932229,
+      "GBP": 0.778282
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-06-04",
+    "rates": {
+      "USD": 1.038658,
+      "CHF": 0.86948,
+      "GBP": 0.868826
+    }
+  },
+  {
+    "success": true,
+    "timestamp": 1715060040,
+    "base": "EUR",
+    "date": "2024-06-05",
+    "rates": {
+      "USD": 1.161201,
+      "CHF": 0.903232,
+      "GBP": 0.888248
+    }
+  }
+]

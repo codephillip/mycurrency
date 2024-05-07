@@ -1,9 +1,8 @@
-import datetime
-
 from django.utils import timezone
 from rest_framework import serializers
 
 from mycurrency.constants import DATE_FORMAT
+from .services.currency_service import save_exchanges_async
 
 
 class CurrencyRateParamsSerializer(serializers.Serializer):
@@ -43,3 +42,18 @@ class TWRRParamsSerializer(serializers.Serializer):
         if data.get('end_date') and data.get('end_date') <= start_date:
             raise serializers.ValidationError({'end_date': 'End date must be greater than start date'})
         return data
+
+
+class CurrencyExchangeRateSerializer(serializers.Serializer):
+    success = serializers.BooleanField()
+    timestamp = serializers.IntegerField()
+    base = serializers.CharField(max_length=3)
+    date = serializers.DateField()
+    rates = serializers.DictField(child=serializers.DecimalField(max_digits=18, decimal_places=6))
+
+    def create(self, validated_data):
+        date = validated_data.pop('date')
+        rates_data = validated_data.pop('rates')
+        base_currency = validated_data.pop('base')
+        save_exchanges_async(base_currency, date, rates_data)
+        return validated_data

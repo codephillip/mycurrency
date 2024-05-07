@@ -1,7 +1,8 @@
 from collections import defaultdict
 from decimal import Decimal
 
-from app.models import CurrencyExchangeRate, ProviderModel
+from unsync import unsync
+from app.models import CurrencyExchangeRate, ProviderModel, Currency
 from datetime import datetime, timedelta
 
 from app.services.provider_service import get_exchange_rate_data, transform_to_executable
@@ -115,3 +116,19 @@ def twrr_formula(start_value: float, end_value: float, n: int) -> Decimal:
     if not start_value:
         return Decimal(0)
     return ((Decimal(end_value) / Decimal(start_value)) ** Decimal(1 / n)) - 1
+
+
+@unsync
+def save_exchanges_async(base_currency, date, rates_data):
+    """
+    Sqlite as db will have multiple locks, consider doing it synchronously
+    """
+    for currency_code, rate_value in rates_data.items():
+        source_currency = Currency.objects.get(code=base_currency)
+        exchanged_currency = Currency.objects.get(code=currency_code)
+        CurrencyExchangeRate.objects.update_or_create(
+            source_currency=source_currency,
+            exchanged_currency=exchanged_currency,
+            valuation_date=date,
+            defaults={'rate_value': rate_value}
+        )
