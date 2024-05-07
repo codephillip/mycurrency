@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "992965fb-1ac5-4c0f-86df-3d4b17af25c4",
+		"name": "mycurrency",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "107694"
+	},
+	"item": [
+		{
+			"name": "bulk upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "json_file",
+							"type": "file",
+							"src": "/home/codephillip/PycharmProjects/mycurrency/app/json/bulk_exchanges.json"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/uploadExchangesJson",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"uploadExchangesJson"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "currencyRatesPerCurrency",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/currencyRatesPerCurrency?date_from=2024-05-01&date_to=2024-05-11&source_currency=EUR",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"currencyRatesPerCurrency"
+					],
+					"query": [
+						{
+							"key": "date_from",
+							"value": "2024-05-01"
+						},
+						{
+							"key": "date_to",
+							"value": "2024-05-11"
+						},
+						{
+							"key": "source_currency",
+							"value": "EUR"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "currencyConverter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/currencyConverter?source_currency=EUR&exchanged_currency=UGX&amount=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"currencyConverter"
+					],
+					"query": [
+						{
+							"key": "source_currency",
+							"value": "EUR"
+						},
+						{
+							"key": "exchanged_currency",
+							"value": "UGX"
+						},
+						{
+							"key": "amount",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "calculateTWRR",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/calculateTWRR?start_date=2024-05-04&amount=100&source_currency=EUR&exchanged_currency=USD",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"calculateTWRR"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2024-05-04"
+						},
+						{
+							"key": "amount",
+							"value": "100"
+						},
+						{
+							"key": "source_currency",
+							"value": "EUR"
+						},
+						{
+							"key": "exchanged_currency",
+							"value": "USD"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
