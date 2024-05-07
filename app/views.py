@@ -7,7 +7,9 @@ from rest_framework.views import APIView
 from mycurrency.constants import UPLOAD_SUCCESS, NOT_FOUND, INVALID_JSON, CONVERSION_FAILED
 from .serializers import CurrencyRateParamsSerializer, CurrencyConverterParamsSerializer, TWRRParamsSerializer, \
     CurrencyExchangeRateSerializer
-from .services.currency_service import get_currency_exchanges, format_currency_converter_response, calculate_twrr
+from .services.rates_per_exchange_service import get_currency_exchanges
+from .services.converter_service import format_currency_converter_response
+from .services.twrr_service import calculate_twrr
 from datetime import datetime
 
 
