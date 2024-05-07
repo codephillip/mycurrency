@@ -3,14 +3,14 @@ from app.models import Currency, CurrencyExchangeRate
 from datetime import datetime
 
 from app.services.provider_service import MockProvider, get_exchange_rate_data
-from mycurrency.constants import DATE_FORMAT
+from mycurrency.constants import DATE_FORMAT, FETCH_HELP, DATE_FORMAT_ERROR, DATE_HELP, RATES_FETCHED_SUCCESS
 
 
 class Command(BaseCommand):
-    help = 'Fetch exchange rates once a day and save them in CurrencyExchangeRate'
+    help = FETCH_HELP
 
     def add_arguments(self, parser):
-        parser.add_argument('--date', type=str, help='Date in the format YYYY-MM-DD (optional)', required=False)
+        parser.add_argument('--date', type=str, help=DATE_HELP, required=False)
 
     def handle(self, *args, **options):
         date_str = options.get('date')
@@ -18,7 +18,7 @@ class Command(BaseCommand):
             try:
                 valuation_date = datetime.strptime(date_str, DATE_FORMAT)
             except ValueError:
-                self.stdout.write(self.style.ERROR('Invalid date format. Please use YYYY-MM-DD'))
+                self.stdout.write(self.style.ERROR(DATE_FORMAT_ERROR))
                 return
         else:
             valuation_date = datetime.now()
@@ -39,4 +39,4 @@ class Command(BaseCommand):
                             rate_value=rates[exchanged_currency.code]
                         )
                         exchange_rate.save()
-        self.stdout.write(self.style.SUCCESS('Exchange rates fetched and saved successfully'))
+        self.stdout.write(self.style.SUCCESS(RATES_FETCHED_SUCCESS))

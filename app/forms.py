@@ -1,6 +1,8 @@
 from django import forms
 from django.core.validators import RegexValidator
 
+from mycurrency.constants import CURRENCIES_FORMAT_MESSAGE
+
 
 class CurrencyExchangeForm(forms.Form):
     source_currency = forms.CharField(max_length=3)
@@ -9,7 +11,7 @@ class CurrencyExchangeForm(forms.Form):
         validators=[
             RegexValidator(
                 regex=r'^[A-Z]{3}(,\s*[A-Z]{3})*$',
-                message='Enter comma-separated currencies in three-letter format eg USD, GBP'
+                message=CURRENCIES_FORMAT_MESSAGE
             )
         ]
     )

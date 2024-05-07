@@ -1,7 +1,7 @@
 from django.utils import timezone
 from rest_framework import serializers
 
-from mycurrency.constants import DATE_FORMAT
+from mycurrency.constants import DATE_FORMAT, CURRENCIES_SAME, END_DATE_GREATER, START_DATE_FUTURE, DATE_FROM_GREATER
 from .services.currency_service import save_exchanges_async
 
 
@@ -12,7 +12,7 @@ class CurrencyRateParamsSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data.get('date_from') >= data.get('date_to'):
-            raise serializers.ValidationError("date_from must be before date_to")
+            raise serializers.ValidationError(DATE_FROM_GREATER)
         return data
 
 
@@ -23,7 +23,7 @@ class CurrencyConverterParamsSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data.get('source_currency') == data.get('exchanged_currency'):
-            raise serializers.ValidationError("Source and exchanged currency must be different")
+            raise serializers.ValidationError(CURRENCIES_SAME)
         return data
 
 
@@ -38,9 +38,9 @@ class TWRRParamsSerializer(serializers.Serializer):
         start_date = data.get('start_date').astimezone(timezone.utc) if data.get('start_date') else None
 
         if start_date and start_date > timezone.now():
-            raise serializers.ValidationError({'start_date': 'Start date cannot be in the future'})
+            raise serializers.ValidationError({'start_date': START_DATE_FUTURE})
         if data.get('end_date') and data.get('end_date') <= start_date:
-            raise serializers.ValidationError({'end_date': 'End date must be greater than start date'})
+            raise serializers.ValidationError({'end_date': END_DATE_GREATER})
         return data
 
 

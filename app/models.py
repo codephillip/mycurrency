@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
-from mycurrency.constants import DATE_FORMAT
+from mycurrency.constants import DATE_FORMAT, CURRENCY_UNACCEPTED, CURRENCY_PROTECTED, CURRENCIES_SAME, PRIORITY_HELP
 
 USD = 'USD'
 EUR = 'EUR'
@@ -28,7 +28,7 @@ class Currency(models.Model):
 
     def delete(self, *args, **kwargs):
         if self.is_protected:
-            raise ValidationError('This currency is protected and cannot be deleted.')
+            raise ValidationError(CURRENCY_PROTECTED)
         super().delete(*args, **kwargs)
 
     def save(self, force_insert=False, force_update=False, using=None,
@@ -36,7 +36,7 @@ class Currency(models.Model):
         if self.code:
             self.code = self.code.upper()
         if self.code not in [choice[0] for choice in CURRENCY_CHOICES]:
-            raise ValidationError('Currency not accepted')
+            raise ValidationError(CURRENCY_UNACCEPTED)
         super().save(force_insert=force_insert, force_update=force_update, using=using,
                      update_fields=update_fields)
 
@@ -56,15 +56,14 @@ class CurrencyExchangeRate(models.Model):
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         if self.source_currency.code == self.exchanged_currency.code:
-            raise ValidationError('Source and exchanged currency must be different')
+            raise ValidationError(CURRENCIES_SAME)
         super().save(force_insert=force_insert, force_update=force_update, using=using,
                      update_fields=update_fields)
 
 
 class ProviderModel(models.Model):
     name = models.CharField(max_length=20, unique=True)
-    priority = models.IntegerField(blank=False, null=False, default=100,
-                                   help_text='The default provider has lowest priority value')
+    priority = models.IntegerField(blank=False, null=False, default=100, help_text=PRIORITY_HELP)
     module_dir = models.CharField(max_length=300)
     module_name = models.CharField(max_length=300, unique=True)
     created_at = models.DateTimeField(default=timezone.now)
