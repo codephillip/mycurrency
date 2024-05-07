@@ -40,6 +40,6 @@ class TWRRView(APIView):
                                          data['amount'],
                                          data['exchanged_currency'],
                                          data['start_date'],
-                                         data.get('end_data', datetime.now().strftime('%Y-%m-%d')))
+                                         data.get('end_date', datetime.now()))
             return Response({'data': twrr_series})
         return Response(serializer.errors, status=400)

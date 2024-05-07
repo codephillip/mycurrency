@@ -11,6 +11,7 @@ from app.models import Currency, CurrencyExchangeRate
 class TWRRViewTests(TestCase):
     def setUp(self):
         self.client = APIClient()
+        self.url = reverse('calculate-twrr')
 
     def test_calculate_twrr_success(self):
         dollar = Currency.objects.create(code='USD', name='US Dollar', symbol='$')
@@ -51,8 +52,7 @@ class TWRRViewTests(TestCase):
             'end_date': self.date_to.strftime('%Y-%m-%d')
         }
 
-        url = reverse('calculate-twrr')
-        response = self.client.get(url, data)
+        response = self.client.get(self.url, data)
 
         self.assertEqual(response.status_code, 200)
         self.assertIn('data', response.data)
@@ -63,8 +63,7 @@ class TWRRViewTests(TestCase):
             {'valuation_date': '2024-05-07', 'source_twrr': Decimal('2.7'), 'exchanged_twrr': Decimal('-2.6')}])
 
     def test_invalid_start_date_input_parameters(self):
-        url = reverse('calculate-twrr')
-        response = self.client.get(url)
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 400)
 
         data = {
@@ -74,39 +73,50 @@ class TWRRViewTests(TestCase):
             'start_date': '2024/01/01',
             'end_date': '2024/01/04'
         }
-        response = self.client.get(url, data)
+        response = self.client.get(self.url, data)
         self.assertEqual(response.status_code, 400)
         self.assertIn('start_date', response.data)
         self.assertIn('end_date', response.data)
 
     def test_no_historical_exchange_rate_data(self):
-        url = reverse('calculate-twrr')
         data = {
             'source_currency': 'USD',
             'amount': 100,
             'exchanged_currency': 'EUR',
-            'start_date': '2250-01-01',
-            'end_date': '2250-01-05'
+            'start_date': '2000-01-01',
+            'end_date': '2000-01-05'
         }
-        response = self.client.get(url, data)
+        response = self.client.get(self.url, data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data['data']), 0)
 
-    def test_end_data_less_than_start_data(self):
-        url = reverse('calculate-twrr')
+    def test_end_date_less_than_start_date(self):
+        self.url = reverse('calculate-twrr')
         data = {
             'source_currency': 'USD',
             'amount': 100,
             'exchanged_currency': 'EUR',
-            'start_date': '2250-01-01',
-            'end_date': '2000-01-05'
+            'start_date': '2011-01-01',
+            'end_date': '2010-01-05'
         }
-        response = self.client.get(url, data)
+        response = self.client.get(self.url, data)
         self.assertEqual(response.status_code, 400)
         self.assertIn('End date must be greater than start date', response.data['end_date'])
+        
+    
+    def test_start_date_in_future(self):
+        data = {
+            'source_currency': 'USD',
+            'amount': 100,
+            'exchanged_currency': 'EUR',
+            'start_date': '2500-01-01',
+            'end_date': '2501-01-05'
+        }
+        response = self.client.get(self.url, data)
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('Start date cannot be in the future', response.data['start_date'])
 
     def test_invalid_input_amount_parameters(self):
-        url = reverse('calculate-twrr')
         start_date = datetime(2024, 1, 1)
         data = {
             'source_currency': 'USD',
@@ -114,6 +124,6 @@ class TWRRViewTests(TestCase):
             'exchanged_currency': 'EUR',
             'start_date': start_date.strftime('%Y-%m-%d')
         }
-        response = self.client.get(url, data)
+        response = self.client.get(self.url, data)
         self.assertEqual(response.status_code, 400)
         self.assertIn('amount', response.data)

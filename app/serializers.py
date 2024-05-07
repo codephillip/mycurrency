@@ -1,3 +1,6 @@
+import datetime
+
+from django.utils import timezone
 from rest_framework import serializers
 
 from mycurrency.constants import DATE_FORMAT
@@ -29,10 +32,14 @@ class TWRRParamsSerializer(serializers.Serializer):
     source_currency = serializers.CharField(max_length=3)
     amount = serializers.DecimalField(max_digits=10, decimal_places=2)
     exchanged_currency = serializers.CharField(max_length=3)
-    start_date = serializers.DateField()
-    end_date = serializers.DateField(required=False)
+    start_date = serializers.DateTimeField()
+    end_date = serializers.DateTimeField(required=False)
 
     def validate(self, data):
-        if data.get('end_date') and data.get('end_date') <= data.get('start_date'):
+        start_date = data.get('start_date').astimezone(timezone.utc) if data.get('start_date') else None
+
+        if start_date and start_date > timezone.now():
+            raise serializers.ValidationError({'start_date': 'Start date cannot be in the future'})
+        if data.get('end_date') and data.get('end_date') <= start_date:
             raise serializers.ValidationError({'end_date': 'End date must be greater than start date'})
         return data
