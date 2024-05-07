@@ -17,11 +17,17 @@ This document outlines the setup, usage, and design of mycurrency.
 - Install requirements using `pip3 install -r requirements.txt`
 - Run migrations `./manage.py migrate`
 - Run server `./manage.py runserver`
+- Create admin user `./manage.py createsuperuser`
 - Set up cronjob. `python manage.py crontab add`
 - Upload exchange data using either the commands, cronjob or [bulk upload](http://127.0.0.1:8000/api/uploadExchangesJson)
 - Load the postman collection
 
 ## Usage
+### Authentication
+- Navigate to the [login page](http://127.0.0.1:8000/auth/token/login)
+- Enter username and password
+- Copy the `token` and add it to the postman envs
+
 ### Normal User URLs
 - Load the Postman collection: [`mycurrency.postman_collection.json`](#).
 

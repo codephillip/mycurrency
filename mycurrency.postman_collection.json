@@ -10,7 +10,13 @@
 			"name": "bulk upload",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token {{token}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -119,7 +125,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/calculateTWRR?start_date=2024-05-04&amount=100&source_currency=EUR&exchanged_currency=USD",
+					"raw": "http://127.0.0.1:8000/api/calculateTWRR?start_date=2024-05-04&amount=100&source_currency=USD&exchanged_currency=EUR",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -143,16 +149,61 @@
 						},
 						{
 							"key": "source_currency",
-							"value": "EUR"
+							"value": "USD"
 						},
 						{
 							"key": "exchanged_currency",
-							"value": "USD"
+							"value": "EUR"
 						}
 					]
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/auth/token/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"auth",
+						"token",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "1c2543cbed9306740c17a923dc4eee3a5ddcd4a3"
 		}
 	]
 }
