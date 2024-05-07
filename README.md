@@ -15,6 +15,7 @@ This document outlines the setup, usage, and design of mycurrency.
 
 - Create a virtual environment and activate env `python3 -m venv venv & source venv/bin/activate`
 - Install requirements using `pip3 install -r requirements.txt`
+- Set envs `export SECRET_KEY='abcd1234' DEBUG=False ALLOWED_HOSTS='["127.0.0.1"]'`
 - Run migrations `./manage.py migrate`
 - Run server `./manage.py runserver`
 - Create admin user `./manage.py createsuperuser`
