@@ -13,10 +13,13 @@ This document outlines the setup, usage, and design of mycurrency.
 
 ## Setup
 
-- Create a virtual environment.
-- Install requirements using `pip3 install -r requirements.txt`.
-- Set up cronjob.
-- Upload exchange data.
+- Create a virtual environment and activate env `python3 -m venv venv & source venv/bin/activate`
+- Install requirements using `pip3 install -r requirements.txt`
+- Run migrations `./manage.py migrate`
+- Run server `./manage.py runserver`
+- Set up cronjob. `python manage.py crontab add`
+- Upload exchange data using either the commands, cronjob or [bulk upload](http://127.0.0.1:8000/api/uploadExchangesJson)
+- Load the postman collection
 
 ## Usage
 ### Normal User URLs
