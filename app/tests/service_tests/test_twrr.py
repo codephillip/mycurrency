@@ -1,5 +1,5 @@
 from django.test import TestCase
-from app.services.currency_service import twrr_formula
+from app.services.twrr_service import twrr_formula
 
 
 class TestTWRR(TestCase):

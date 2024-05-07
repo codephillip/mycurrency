@@ -1,17 +1,22 @@
 import json
 
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from mycurrency.constants import UPLOAD_SUCCESS, NOT_FOUND, INVALID_JSON, CONVERSION_FAILED
 from .serializers import CurrencyRateParamsSerializer, CurrencyConverterParamsSerializer, TWRRParamsSerializer, \
     CurrencyExchangeRateSerializer
-from .services.currency_service import get_currency_exchanges, format_currency_converter_response, calculate_twrr
+from .services.rates_per_exchange_service import get_currency_exchanges
+from .services.converter_service import format_currency_converter_response
+from .services.twrr_service import calculate_twrr
 from datetime import datetime
 
 
 class CurrencyRatePerCurrencyView(APIView):
+    permission_classes = (IsAuthenticated, IsAdminUser)
+
     def get(self, request):
         serializer = CurrencyRateParamsSerializer(data=request.query_params)
         if serializer.is_valid():
@@ -24,6 +29,8 @@ class CurrencyRatePerCurrencyView(APIView):
 
 
 class CurrencyConverterView(APIView):
+    permission_classes = (IsAuthenticated, IsAdminUser)
+
     def get(self, request):
         serializer = CurrencyConverterParamsSerializer(data=request.query_params)
         if serializer.is_valid():
@@ -38,6 +45,8 @@ class CurrencyConverterView(APIView):
 
 
 class TWRRView(APIView):
+    permission_classes = (IsAuthenticated, IsAdminUser)
+
     def get(self, request):
         serializer = TWRRParamsSerializer(data=request.query_params)
         if serializer.is_valid():
@@ -52,6 +61,8 @@ class TWRRView(APIView):
 
 
 class UploadExchangesJson(APIView):
+    permission_classes = (IsAuthenticated, IsAdminUser)
+
     def post(self, request):
         try:
             json_data = json.loads(request.data['json_file'].read().decode('utf-8'))
